@@ -24,6 +24,7 @@ def selection(node, explored_leaf_node, maxLeafNode, seq):
     # 当叶子节点没有被搜索完时
     while len(explored_leaf_node) < maxLeafNode:
         # 当前节点不是叶子节点时
+        
         while len(node.seq) < len(seq):
             # 第一次访问新节点，初始化它的孩子节点
             if len(node.children) == 0:
@@ -43,7 +44,7 @@ def selection(node, explored_leaf_node, maxLeafNode, seq):
 
             # 否则依据UCB公式计算最优的孩子节点，重复这个过程
             node = best_child(node)
-
+            
         # 当访问到新的叶子节点时，添加到叶子节点列表
         for n in explored_leaf_node:
             if operator.eq(node.seq, n) == False:
@@ -64,10 +65,13 @@ def init_children(node, seq):
     # 搜集不在当前节点中的元素，放入列表rest_e
     rest_e = []
     for i in seq:
-        for j in node.seq:
-            if operator.eq(i, j) == False:
-                rest_e.append(i) 
-                break
+        if len(node.seq) == 0:
+            rest_e.append(i)
+        else:
+            for j in node.seq:
+                if operator.eq(i, j) == False:
+                    rest_e.append(i) 
+                    break
     # 取rest_e中的一个元素与当前节点状态组合，生成新的节点            
     for e in rest_e:
         child = Node()
@@ -225,10 +229,6 @@ def MCTS(forecast, real, seq, M, PT):
     # 计算Q值公式中需要的真实向量v、预测向量f(最细粒度)，跟choise无关,去掉最后的累和
     v = copy.deepcopy(real[:-1, :-1, :-1, :-1, :-1])
     f = copy.deepcopy(forecast[:-1, :-1, :-1, :-1, :-1])
-    # row_num = len(forecast) - 1
-    # for i in range(row_num):
-    #     v.extend(real[i][:-1][:-1][:-1][:-1])  #
-    #     f.extend(forecast[i][:-1][:-1][:-1][:-1])
     v = np.array(v)
     f = np.array(f)
 
@@ -242,6 +242,7 @@ def MCTS(forecast, real, seq, M, PT):
     node = Node()
     max_q = 0
     best_node = None
+    
 
     # 开始搜索，最大搜索次数可变
     for i in range(M):
@@ -584,26 +585,6 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
         result_Q = mix_node12345.Q
         result_seq = mix_node12345.seq
 
-    # # 返回综合结果
-    # if row_node.Q >= column_node.Q and row_node.Q >= mix_node.Q:
-    #     for i in row_node.state:
-    #         result_name.append([row_name[i[0]]])
-    #         result_Q = row_node.Q
-    # elif column_node.Q >= row_node.Q and column_node.Q >= mix_node.Q:
-    #     for i in column_node.state:
-    #         result_name.append([column_name[i[0]]])
-    #         result_Q = column_node.Q
-    # elif mix_node.Q > row_node.Q and mix_node.Q > column_node.Q:
-    #     for i in mix_node.state:
-    #         result_name.append([row_name[i[0]], column_name[i[1]]])
-    #         result_Q = mix_node.Q
-
-    # 返回二维结果
-    
-    # for i in mix_node.state:
-    #     result_name.append([dim1_name[i[0]], dim2_name[i[1]]])
-    #     result_Q = mix_node.Q
-
 
     return result_seq, result_Q
 
@@ -634,7 +615,11 @@ if __name__ == '__main__':
     dim4_name = ['1', '2']
     dim5_name = ['!', '@']
     
-
+    # node = Node()
+    # print(len(node.seq))
+    # while len(node.seq) < 147:
+    #     print('asd')
+    #     break
 
     name, Q = get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT)
 
