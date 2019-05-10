@@ -2,7 +2,7 @@
 
 - hotspot.py: 二维版本代码
 
-- version1.py: 改造的五维版本代码，存在bug，需进一步修改
+- version1.py: 修复了一些bugs，但跑一次需要很久，怀疑因为每计算一个ps值需要扫描所有最细颗粒度的值，需进一步review
 
 - real*.npy: 异常时刻的真实值数据，五维数组
 
