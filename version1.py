@@ -12,8 +12,7 @@ class Node(object):
     def __init__(self):
         self.parents = None
         self.children = []
-        self.state = []
-        self.seq = []  
+        self.seq = [] 
 
         self.Q = 0
         self.N = 0
@@ -46,8 +45,10 @@ def selection(node, explored_leaf_node, maxLeafNode, seq):
             node = best_child(node)
             
         # 当访问到新的叶子节点时，添加到叶子节点列表
+        # 叶子节点列表为空
         if len(explored_leaf_node) == 0:
             explored_leaf_node.append(node.seq)
+        # 叶子节点列表不为空
         else:
             for n in explored_leaf_node:
                 if operator.eq(node.seq, n) == False:
@@ -72,8 +73,10 @@ def init_children(node, seq):
     # 搜集不在当前节点中的元素，放入列表rest_e
     rest_e = []
     for i in seq:
+        # 当前节点元素为空
         if len(node.seq) == 0:
             rest_e.append(i)
+        # 当前节点元素非空
         else:
             for j in node.seq:
                 if operator.eq(i, j) == False:
@@ -145,11 +148,11 @@ def evalation(selection_node, max_seq, forecast, real, v, f):
     return new_q
 
 
-def get_scores(set, forecast, real, v, f): #set-候选集合，一个元素为一个list， forecast-预测值， real-真实值， v-真实向量， f-预测向量
-    # 复制预测值为cp(copy)
+def get_scores(set, forecast, real, v, f): #set-当前集合，一个元素为一个list， forecast-预测值， real-真实值， v-真实向量， f-预测向量
+    # 复制预测值为cp(copy)，去除最后的累和
     cp = copy.deepcopy(forecast[:-1, :-1, :-1, :-1, :-1])
-    # 在cp的基础上，根据状态中的所有元素，
-    # 不为最细颗粒度时，将cp对应位置根据公式5改为计算值a，为最细颗粒度时，将cp对应位置改为真实值
+    # 在cp的基础上，看集合中的元素，
+    # 元素不为最细颗粒度时，将cp对应位置根据公式5改为计算值a，为最细颗粒度时，将cp对应位置改为真实值
     # flag = 0: 最细粒度，   flag = 1:不为最细粒度
     flag = 0
     for tmp in set[0]:
@@ -240,6 +243,7 @@ def MCTS(forecast, real, seq, M, PT):
     f = np.array(f)
 
     # 计算单元素Q值
+    # score_single_e为字典，key为字符串化的元素seq，value为ps值
     score_single_e = {}
     for e in seq:
         e_str = ''.join(str(j) for j in e)
@@ -278,11 +282,6 @@ def MCTS(forecast, real, seq, M, PT):
     return best_node
 
 
-# def get_choise(number):
-#     choise = []
-#     for i in range(number - 1):
-#         choise.append([i])
-#     return choise
 
 def get_seq(number, dimension):
     seq = []
@@ -542,14 +541,15 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     dim3_node = MCTS(forecast, real, get_seq(forecast.shape[2], 2), M, PT)
     dim4_node = MCTS(forecast, real, get_seq(forecast.shape[3], 3), M, PT)
     dim5_node = MCTS(forecast, real, get_seq(forecast.shape[4], 4), M, PT)   
+
     one_dim = [dim1_node, dim2_node, dim3_node, dim4_node, dim5_node]
     print('one dimension result')
     for d in one_dim:
         print(d.seq)
     print()
-    #去除父节点不在BSet中的element，即剪枝, 两两组合
     
-    
+    # get_mix_seq函数用于去除父节点不在BSet中的element，即剪枝, 两两组合
+
     #layer2 搜索
     mix_node12 = MCTS(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT)
     mix_node13 = MCTS(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT)
@@ -561,6 +561,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     mix_node34 = MCTS(forecast, real, get_mix_seq(dim3_node, dim4_node, 3, 4), M, PT)
     mix_node35 = MCTS(forecast, real, get_mix_seq(dim3_node, dim5_node, 3, 5), M, PT)
     mix_node45 = MCTS(forecast, real, get_mix_seq(dim4_node, dim5_node, 4, 5), M, PT)
+
     two_dim = [mix_node12, mix_node13, mix_node14, mix_node15, mix_node23, mix_node24, mix_node25, mix_node34, mix_node35, mix_node45]
     print('two dimension result')
     for d in two_dim:
@@ -578,6 +579,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     mix_node235 = MCTS(forecast, real, get_mix_seq3(mix_node23, mix_node35, mix_node25, 2, 3, 5), M, PT)
     mix_node245 = MCTS(forecast, real, get_mix_seq3(mix_node24, mix_node45, mix_node25, 2, 4, 5), M, PT)
     mix_node345 = MCTS(forecast, real, get_mix_seq3(mix_node34, mix_node45, mix_node35, 3, 4, 5), M, PT)
+
     three_dim = [mix_node123, mix_node124, mix_node125, mix_node134, mix_node135, mix_node145, mix_node234, mix_node235, mix_node245, mix_node345]
     print('three dimension result')
     for d in three_dim:
@@ -590,6 +592,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     mix_node1245 = MCTS(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT)
     mix_node1345 = MCTS(forecast, real, get_mix_seq4(mix_node134, mix_node135, mix_node145, mix_node345, 1, 3, 4, 5), M, PT)
     mix_node2345 = MCTS(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5), M, PT)
+
     four_dim = [mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345]
     print('four dimension result')
     for d in four_dim:
@@ -603,10 +606,9 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     print()
     
 
-
+    # 从Bset中选取拥有最大PS值的Rset
     result_seq = []
     result_Q = 0
-
     for node in one_dim:
         if node.Q > result_Q:
             result_Q = node.Q
@@ -642,39 +644,15 @@ if __name__ == '__main__':
     forecast = np.load(file='./real_table_1536976500000.npy')
     
    
-    # 测试数据1
-    # dim1_name = ['Mobile', 'Unicom']
-    # dim2_name = ['Beijing', 'Shanghai', 'Guangzhou']
-    # forecast = [[20, 15, 10, 45],
-    #             [10, 25, 20, 55],
-    #             [30, 40, 30, 100]]
-    # real = [[14, 9, 10, 33],
-    #         [7, 15, 20, 42],
-    #         [21, 24, 30, 75]]
-    #dimension, element
+    # 测试数据
+    # dimension, element, 随便写的
     dim1_name = ['Mobile', 'Unicom']
     dim2_name = ['Beijing', 'Shanghai', 'Guangzhou']
     dim3_name = ['a', 'b']
     dim4_name = ['1', '2']
     dim5_name = ['!', '@']
     
-    #########################
-    # forecast = np.array(forecast)
-    # real = np.array(real)
-    # s = [[-1,0,0,0,0], [-1,0,0,0,1]]
-    # mix_node234 = Node()
-    # mix_node235 = Node()
-    # mix_node245 = Node()
-    # mix_node345 = Node()
-    # mix_node234.seq = [[-1,0,0,0,-1], [-1,0,1,0,-1]]
-    # mix_node235.seq = [[-1,0,0,-1,0], [-1,0,0,-1,1]]
-    # mix_node245.seq = [[-1,0,-1,0,0], [-1,0,-1,0,1]]
-    # mix_node345.seq = [[-1,-1,0,0,0], [-1,-1,-0,0,1]]
-    # print(get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5))
-    # mix_node2345 = MCTS(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 1, 2, 4, 5), M, PT)
-    # print(p.seq)
-    ###########################
-
+    
     name, Q = get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT)
 
     print ("根因组合: ")
