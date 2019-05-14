@@ -4,9 +4,10 @@
 
 - hotspot.py: 二维版本代码
 
-- version1.py: 进一步修复bugs，可进行五个维度的根因分析，但需要较长时间，效果未知。
+- version1.py: 单线程版本，可进行五个维度的根因分析，需要较长时间。
+- version1.py: 多线程版本，可进行五个维度的根因分析。
 
-- real*.npy: 两个时刻的真实值数据，五维表
+- test_data: 数据集
 
 - record_test1.md: 数据集描述
 
