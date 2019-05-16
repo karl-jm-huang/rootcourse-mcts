@@ -20,4 +20,5 @@
 
 ## 初步结果：
 
-<img src='./result.PNG'>
+<img src='./1.PNG'>
+<img src='./2.PNG'>
