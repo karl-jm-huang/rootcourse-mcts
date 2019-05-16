@@ -5,6 +5,8 @@ import numpy as np
 import copy
 import random
 import operator
+import datetime
+import sys
 
 
 class Node(object):
@@ -102,6 +104,7 @@ def best_child(node):
 
         # 在可选的节点里面选择最优
         if sub_node.Q > 0:
+        # if sub_node.N > 0:
             C = math.sqrt(2.0)
             left = sub_node.Q
             right = math.log(node.N) / sub_node.N
@@ -110,7 +113,7 @@ def best_child(node):
             if score > best_score:
                 best = sub_node
                 best_score = score
-
+    if best is None: best = Node()
     return best
 
 
@@ -172,7 +175,8 @@ def get_scores(set, forecast, real, v, f): #set-当前集合，一个元素为�
                     for d3 in range(dim[2][0], dim[2][1]):
                         for d4 in range(dim[3][0], dim[3][1]):
                             for d5 in range(dim[4][0], dim[4][1]):
-                                cp[d1][d2][d3][d4][d5] = getValueA(forecast[d1][d2][d3][d4][d5], forecast[i[0]][i[1]][i[2]][i[3]][i[4]], real[i[0]][i[1]][i[2]][i[3]][i[4]])
+                                if forecast[i[0]][i[1]][i[2]][i[3]][i[4]] == 0: cp[d1][d2][d3][d4][d5] = 0  # 预测值为0，暂时将计算值置零
+                                else: cp[d1][d2][d3][d4][d5] = getValueA(forecast[d1][d2][d3][d4][d5], forecast[i[0]][i[1]][i[2]][i[3]][i[4]], real[i[0]][i[1]][i[2]][i[3]][i[4]])
     # 最细粒度,直接改变为真实值
     else:   
         for i in set:
@@ -272,6 +276,8 @@ def MCTS(forecast, real, seq, M, PT):
         # 4、更新，新状态节点至根节点路径中的每个节点：N+1，Q赋值为路径中最大Q值
         backup(selection_node, max_e, new_q)
 
+        
+
         # 如果根节点Q值变大，则更新最优节点
         if node.Q > max_q:
             best_node = get_best_node(node)
@@ -292,6 +298,12 @@ def get_seq(number, dimension):
     return seq
 
 def get_mix_seq(node1, node2, col1, col2): #两个维度的组合
+    if node1 is None:
+        node1 = Node()
+        node1.seq = [[-1, -1, -1, -1, -1]]
+    if node2 is None:
+        node2 = Node()
+        node2.seq = [[-1, -1, -1, -1, -1]]
     seq = []
     col1 = col1 - 1
     col2 = col2 - 1
@@ -318,6 +330,16 @@ def get_mix_seq(node1, node2, col1, col2): #两个维度的组合
     return seq
 
 def get_mix_seq3(node1, node2, node3, col1, col2, col3): # 三个维度的组合
+    if node1 is None:
+        node1 = Node()
+        node1.seq = [[-1, -1, -1, -1, -1]]
+    if node2 is None:
+        node2 = Node()
+        node2.seq = [[-1, -1, -1, -1, -1]]
+    if node3 is None:
+        node3 = Node()
+        node3.seq = [[-1, -1, -1, -1, -1]]
+        
     # mix_node12, mix_node23, mix_node13, 1, 2, 3
     seq = []
     col1 = col1 - 1 
@@ -365,6 +387,18 @@ def get_mix_seq3(node1, node2, node3, col1, col2, col3): # 三个维度的组合
     return seq
 
 def get_mix_seq4(node1, node2, node3, node4, col1, col2, col3, col4): # 四个维度组合
+    if node1 is None:
+        node1 = Node()
+        node1.seq = [[-1, -1, -1, -1, -1]]
+    if node2 is None:
+        node2 = Node()
+        node2.seq = [[-1, -1, -1, -1, -1]]
+    if node3 is None:
+        node3 = Node()
+        node3.seq = [[-1, -1, -1, -1, -1]]
+    if node4 is None:
+        node4 = Node()
+        node4.seq = [[-1, -1, -1, -1, -1]]
     # mix_node123, mix_node124, mix_node134, mix_nod234, 1, 2, 3, 4
     seq = []
     col1 = col1 - 1 
@@ -438,6 +472,21 @@ def get_mix_seq4(node1, node2, node3, node4, col1, col2, col3, col4): # 四个�
     return seq
             
 def get_mix_seq5(node1, node2, node3, node4, node5): # 五个维度组合
+    if node1 is None:
+        node1 = Node()
+        node1.seq = [[-1, -1, -1, -1, -1]]
+    if node2 is None:
+        node2 = Node()
+        node2.seq = [[-1, -1, -1, -1, -1]]
+    if node3 is None:
+        node3 = Node()
+        node3.seq = [[-1, -1, -1, -1, -1]]
+    if node4 is None:
+        node4 = Node()
+        node4.seq = [[-1, -1, -1, -1, -1]]
+    if node5 is None:
+        node5 = Node()
+        node5.seq = [[-1, -1, -1, -1, -1]]
     # mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_nod2345
     seq = []
     dim1 = []
@@ -533,8 +582,7 @@ def get_mix_seq5(node1, node2, node3, node4, node5): # 五个维度组合
 
 
 def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT):
-    forecast = np.array(forecast)
-    real = np.array(real)
+    
     #layer1 对每个维度进行搜索，找到BSet
     dim1_node = MCTS(forecast, real, get_seq(forecast.shape[0], 0), M, PT)
     dim2_node = MCTS(forecast, real, get_seq(forecast.shape[1], 1), M, PT)
@@ -545,7 +593,8 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     one_dim = [dim1_node, dim2_node, dim3_node, dim4_node, dim5_node]
     print('one dimension result')
     for d in one_dim:
-        print(d.seq)
+        if d is None: print('None')
+        else: print(d.seq)
     print()
     
     # get_mix_seq函数用于去除父节点不在BSet中的element，即剪枝, 两两组合
@@ -565,7 +614,8 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     two_dim = [mix_node12, mix_node13, mix_node14, mix_node15, mix_node23, mix_node24, mix_node25, mix_node34, mix_node35, mix_node45]
     print('two dimension result')
     for d in two_dim:
-        print(d.seq)
+        if d is None: print('None')
+        else: print(d.seq)
     print()
 
     #layer3 搜索
@@ -583,7 +633,8 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     three_dim = [mix_node123, mix_node124, mix_node125, mix_node134, mix_node135, mix_node145, mix_node234, mix_node235, mix_node245, mix_node345]
     print('three dimension result')
     for d in three_dim:
-        print(d.seq)
+        if d is None: print('None')
+        else: print(d.seq)
     print()
 
     #layer4 搜索
@@ -596,13 +647,15 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     four_dim = [mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345]
     print('four dimension result')
     for d in four_dim:
-        print(d.seq)
+        if d is None: print('None')
+        else: print(d.seq)
     print()
 
     #layer5 搜索
     mix_node12345 = MCTS(forecast, real, get_mix_seq5(mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345), M, PT)
     print('five dimension result')
-    print(mix_node12345.seq)
+    if mix_node12345 is None: print('None')
+    else: print(mix_node12345.seq)
     print()
     
 
@@ -610,22 +663,22 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     result_seq = []
     result_Q = 0
     for node in one_dim:
-        if node.Q > result_Q:
+        if node is not None and node.Q > result_Q:
             result_Q = node.Q
             result_seq = node.seq
     for node in two_dim:
-        if node.Q > result_Q:
+        if node is not None and node.Q > result_Q:
             result_Q = node.Q
             result_seq = node.seq
     for node in three_dim:
-        if node.Q > result_Q:
+        if node is not None and node.Q > result_Q:
             result_Q = node.Q
             result_seq = node.seq
     for node in four_dim:
-        if node.Q > result_Q:
+        if node is not None and node.Q > result_Q:
             result_Q = node.Q
             result_seq = node.seq
-    if mix_node12345.Q > result_Q:
+    if mix_node12345 is not None and mix_node12345.Q > result_Q:
         result_Q = mix_node12345.Q
         result_seq = mix_node12345.seq
 
@@ -635,15 +688,20 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
 if __name__ == '__main__':
     # M 是最大搜索次数
-    # M = 1000000
-    M = 10
+    # M = 10
+    M = int(sys.argv[1])
     # PT 是Q值的阀值
-    PT = 0.75
+    # PT = 0.75
+    PT = float(sys.argv[2])
     # 5维
-    real = np.load(file="./real_table_1536954600000.npy")  #(148, 14, 10, 36, 6)
-    forecast = np.load(file='./real_table_1536976500000.npy')
-    
+    forecast = np.load(file=sys.argv[3])  #(150, 15, 10, 37, 6)
+    real = np.load(file=sys.argv[4])
+    forecast = np.array(forecast)
+    real = np.array(real)
    
+    # dim5_node = MCTS(forecast, real, get_seq(forecast.shape[4], 4), M, PT)   
+    # print(dim5_node.seq)
+
     # 测试数据
     # dimension, element, 随便写的
     dim1_name = ['Mobile', 'Unicom']
@@ -652,10 +710,18 @@ if __name__ == '__main__':
     dim4_name = ['1', '2']
     dim5_name = ['!', '@']
     
-    
+    start_time = datetime.datetime.now()
     name, Q = get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT)
+    end_time = datetime.datetime.now()
 
+    print('---------------------------------------------------------------')
+    print("异常时刻：")
+    print(sys.argv[3])
+    print("运行时间：")
+    print(end_time-start_time)
     print ("根因组合: ")
     print (json.dumps(name, ensure_ascii=False))#.encode("utf8")
     print ("组合得分: ")
     print (Q)
+    print('---------------------------------------------------------------')
+    print()

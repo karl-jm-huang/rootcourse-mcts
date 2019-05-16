@@ -10,6 +10,6 @@ PT = 0.75
 for f in files:
     forecast = f_path+'/'+f
     real = r_path+'/'+f
-    cmd = 'python version2.py '+str(M)+' '+str(PT)+' '+forecast+' '+real
+    cmd = 'python version3.py '+str(M)+' '+str(PT)+' '+forecast+' '+real
     os.system(cmd)
     break

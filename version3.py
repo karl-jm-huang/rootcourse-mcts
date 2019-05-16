@@ -5,25 +5,10 @@ import numpy as np
 import copy
 import random
 import operator
-import threading
 import datetime
 import sys
+import multiprocessing
 
-
-class MyThread(threading.Thread):
-    def __init__(self,func,args=()):
-        super(MyThread,self).__init__()
-        self.func = func
-        self.args = args
-
-    def run(self):
-        self.result = self.func(*self.args)
-
-    def get_result(self):
-        try:
-            return self.result  # 如果子线程不使用join方法，此处可能会报没有self.result的错误
-        except Exception:
-            return None
 
 class Node(object):
     # node类初始化
@@ -598,18 +583,24 @@ def get_mix_seq5(node1, node2, node3, node4, node5): # 五个维度组合
 
 
 def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT):
+
     
+
     #layer1 对每个维度进行搜索，找到BSet 
+    multiprocessing.freeze_support() # window平台
+    pool = multiprocessing.Pool()  #创建进程池
     one_dim = []
-    thread = []
+    process = []
     for i in range(5):
-        t = MyThread(MCTS, args=(forecast, real, get_seq(forecast.shape[i], i), M, PT))
-        thread.append(t)
-        t.start()
-    for t in thread:
-        t.join()
-        one_dim.append(t.get_result())
+        p = pool.apply_async(MCTS, args=(forecast, real, get_seq(forecast.shape[i], i), M, PT,))
+        process.append(p)
     
+    pool.close()
+    pool.join()
+
+    for p in process:
+        one_dim.append(p.get())
+
     dim1_node = one_dim[0]
     dim2_node = one_dim[1]
     dim3_node = one_dim[2]
@@ -621,51 +612,38 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
         if d is None: print('None')
         else: print(d.seq)
     print()
+
     
     # get_mix_seq函数用于去除父节点不在BSet中的element，即剪枝, 两两组合
 
     #layer2 搜索
-    t1 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT))
-    t1.start()
-    t2 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT))
-    t2.start()
-    t3 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim4_node, 1, 4), M, PT))
-    t3.start()
-    t4 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim5_node, 1, 5), M, PT))
-    t4.start()
-    t5 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim3_node, 2, 3), M, PT))
-    t5.start()
-    t6 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim4_node, 2, 4), M, PT))
-    t6.start()
-    t7 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim5_node, 2, 5), M, PT))
-    t7.start()
-    t8 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim4_node, 3, 4), M, PT))
-    t8.start()
-    t9 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim5_node, 3, 5), M, PT))
-    t9.start()
-    t10 = MyThread(MCTS, args=(forecast, real, get_mix_seq(dim4_node, dim5_node, 4, 5), M, PT))
-    t10.start()
+    multiprocessing.freeze_support() # window平台
+    pool = multiprocessing.Pool()  #创建进程池
+    t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT,))
+    t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT,))
+    t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim4_node, 1, 4), M, PT,))
+    t4 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim5_node, 1, 5), M, PT,))
+    t5 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim3_node, 2, 3), M, PT,))
+    t6 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim4_node, 2, 4), M, PT,))
+    t7 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim5_node, 2, 5), M, PT,))
+    t8 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim4_node, 3, 4), M, PT,))
+    t9 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim5_node, 3, 5), M, PT,))
+    t10 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim4_node, dim5_node, 4, 5), M, PT,))
 
-    t1.join()
-    mix_node12 = t1.get_result()
-    t2.join()
-    mix_node13 = t2.get_result()
-    t3.join()
-    mix_node14 = t3.get_result()
-    t4.join()
-    mix_node15 = t4.get_result()
-    t5.join()
-    mix_node23 = t5.get_result()
-    t6.join()
-    mix_node24 = t6.get_result()
-    t7.join()
-    mix_node25 = t7.get_result()
-    t8.join()
-    mix_node34 = t8.get_result()
-    t9.join()
-    mix_node35 = t9.get_result()
-    t10.join()
-    mix_node45 = t10.get_result()
+    pool.close()
+    pool.join()
+
+
+    mix_node12 = t1.get()
+    mix_node13 = t2.get()
+    mix_node14 = t3.get()
+    mix_node15 = t4.get()
+    mix_node23 = t5.get()
+    mix_node24 = t6.get()
+    mix_node25 = t7.get()
+    mix_node34 = t8.get()
+    mix_node35 = t9.get()
+    mix_node45 = t10.get()
 
     two_dim = [mix_node12, mix_node13, mix_node14, mix_node15, mix_node23, mix_node24, mix_node25, mix_node34, mix_node35, mix_node45]
     print('two dimension result')
@@ -676,47 +654,32 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
 
     #layer3 搜索
-    t1 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT))
-    t1.start()
-    t2 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node24, mix_node14, 1, 2, 4), M, PT))
-    t2.start()
-    t3 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node25, mix_node15, 1, 2, 5), M, PT))
-    t3.start()
-    t4 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node34, mix_node14, 1, 3, 4), M, PT))
-    t4.start()
-    t5 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node35, mix_node15, 1, 3, 5), M, PT))
-    t5.start()
-    t6 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node14, mix_node45, mix_node15, 1, 4, 5), M, PT))
-    t6.start()
-    t7 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node34, mix_node24, 2, 3, 4), M, PT))
-    t7.start()
-    t8 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node35, mix_node25, 2, 3, 5), M, PT))
-    t8.start()
-    t9 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node24, mix_node45, mix_node25, 2, 4, 5), M, PT))
-    t9.start()
-    t10 =  MyThread(MCTS, args=(forecast, real, get_mix_seq3(mix_node34, mix_node45, mix_node35, 3, 4, 5), M, PT))
-    t10.start()
+    multiprocessing.freeze_support() # window平台
+    pool = multiprocessing.Pool()  #创建进程池
+    t1 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT,))
+    t2 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node24, mix_node14, 1, 2, 4), M, PT,))
+    t3 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node25, mix_node15, 1, 2, 5), M, PT,))
+    t4 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node34, mix_node14, 1, 3, 4), M, PT,))
+    t5 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node35, mix_node15, 1, 3, 5), M, PT,))
+    t6 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node14, mix_node45, mix_node15, 1, 4, 5), M, PT,))
+    t7 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node34, mix_node24, 2, 3, 4), M, PT,))
+    t8 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node35, mix_node25, 2, 3, 5), M, PT,))
+    t9 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node24, mix_node45, mix_node25, 2, 4, 5), M, PT,))
+    t10 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node34, mix_node45, mix_node35, 3, 4, 5), M, PT,))
 
-    t1.join()
-    mix_node123 = t1.get_result()
-    t2.join()
-    mix_node124 = t2.get_result()
-    t3.join()
-    mix_node125 = t3.get_result()
-    t4.join()
-    mix_node134 = t4.get_result()
-    t5.join()
-    mix_node135 = t5.get_result()
-    t6.join()
-    mix_node145 = t6.get_result()
-    t7.join()
-    mix_node234 = t7.get_result()
-    t8.join()
-    mix_node235 = t8.get_result()
-    t9.join()
-    mix_node245 = t9.get_result()
-    t10.join()
-    mix_node345 = t10.get_result()
+    pool.close()
+    pool.join()
+
+    mix_node123 = t1.get()
+    mix_node124 = t2.get()
+    mix_node125 = t3.get()
+    mix_node134 = t4.get()
+    mix_node135 = t5.get()
+    mix_node145 = t6.get()
+    mix_node234 = t7.get()
+    mix_node235 = t8.get()
+    mix_node245 = t9.get()
+    mix_node345 = t10.get()
 
     three_dim = [mix_node123, mix_node124, mix_node125, mix_node134, mix_node135, mix_node145, mix_node234, mix_node235, mix_node245, mix_node345]
     print('three dimension result')
@@ -726,27 +689,22 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     print()
 
     #layer4 搜索
-    t1 =  MyThread(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node124, mix_node134, mix_node234, 1, 2, 3, 4), M, PT))
-    t1.start()
-    t2 =  MyThread(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node125, mix_node135, mix_node235, 1, 2, 3, 5), M, PT))
-    t2.start()
-    t3 =  MyThread(MCTS, args=(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT))
-    t3.start()
-    t4 =  MyThread(MCTS, args=(forecast, real, get_mix_seq4(mix_node134, mix_node135, mix_node145, mix_node345, 1, 3, 4, 5), M, PT))
-    t4.start()
-    t5 =  MyThread(MCTS, args=(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5), M, PT))
-    t5.start()
+    multiprocessing.freeze_support() # window平台
+    pool = multiprocessing.Pool()  #创建进程池
+    t1 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node124, mix_node134, mix_node234, 1, 2, 3, 4), M, PT,))
+    t2 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node125, mix_node135, mix_node235, 1, 2, 3, 5), M, PT,))
+    t3 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT,))
+    t4 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node134, mix_node135, mix_node145, mix_node345, 1, 3, 4, 5), M, PT,))
+    t5 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5), M, PT,))
 
-    t1.join()
-    mix_node1234 = t1.get_result()
-    t2.join()
-    mix_node1235 = t2.get_result()
-    t3.join()
-    mix_node1245 = t3.get_result()
-    t4.join()
-    mix_node1345 = t4.get_result()
-    t5.join()
-    mix_node2345 = t5.get_result()
+    pool.close()
+    pool.join()
+    
+    mix_node1234 = t1.get()
+    mix_node1235 = t2.get()
+    mix_node1245 = t3.get()
+    mix_node1345 = t4.get()
+    mix_node2345 = t5.get()
 
     four_dim = [mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345]
     print('four dimension result')
@@ -792,7 +750,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
 if __name__ == '__main__':
     # M 是最大搜索次数
-    # M = 10
+    # M = 1000000
     M = int(sys.argv[1])
     # PT 是Q值的阀值
     # PT = 0.75
@@ -803,6 +761,9 @@ if __name__ == '__main__':
     forecast = np.array(forecast)
     real = np.array(real)
    
+    # dim5_node = MCTS(forecast, real, get_seq(forecast.shape[4], 4), M, PT)   
+    # print(dim5_node.seq)
+
     # 测试数据
     # dimension, element, 随便写的
     dim1_name = ['Mobile', 'Unicom']
@@ -817,7 +778,7 @@ if __name__ == '__main__':
 
 
     print('---------------------------------------------------------------')
-    print("异常时刻：")
+    print('异常时刻：')
     print(sys.argv[3])
     print("运行时间：")
     print(end_time-start_time)
