@@ -23,15 +23,14 @@ class Node(object):
 
 def selection(node, explored_leaf_node, maxLeafNode, seq):
     all_selected = False
-    # 当叶子节点没有被搜索完时
+    # 节点未全部搜完时
     while len(explored_leaf_node) < maxLeafNode:
-        # 当前节点不是叶子节点时
-        
+        # 当前节点不是所有属性值组合时
         while len(node.seq) < len(seq):
             # 第一次访问新节点，初始化它的孩子节点
             if len(node.children) == 0:
                 init_children(node, seq)
-            # 如果当前节点存在没有访问过的孩子节点，则依据概率选择深度优先还是广度优先
+            # 如果当前节点存在没有访问过的孩子节点，则依据概率选择是否访问该孩子节点
             Q_max = 0
             is_random = False
             for i in node.children:
@@ -46,45 +45,54 @@ def selection(node, explored_leaf_node, maxLeafNode, seq):
 
             # 否则依据UCB公式计算最优的孩子节点，重复这个过程
             node = best_child(node)
-            
-        # 当访问到新的叶子节点时，添加到叶子节点列表
-        # 叶子节点列表为空
-        if len(explored_leaf_node) == 0:
-            explored_leaf_node.append(node.seq)
-        # 叶子节点列表不为空
-        else:
-            for n in explored_leaf_node:
-                if operator.eq(node.seq, n) == False:
-                    explored_leaf_node.append(node.seq)
-                    break
-        # 同时对到达叶子节点这条路径上的所有节点：N+1
-        while True:
-            if node.parents is not None:
-                node.N += 1
-                node = node.parents
-            else:
-                node.N += 1
-                break
 
-    # 叶子节点被搜索完时，不再搜索并返回
+        # 当前节点为所有属性值组合，即最底层节点时，回溯有子节点未被访问过的节点
+        have_unvisited = False
+        while have_unvisited == False and node.parents is not None:
+            node = node.parents
+            for i in node.children:
+                if i.N == 0:
+                    have_unvisited = True
+                    break
+    # 全部搜完时
     all_selected = True
     return node, all_selected
 
+def add_explore_node(explored_leaf_node, node):
+    # 叶子节点列表为空
+    if len(explored_leaf_node) == 0:
+        explored_leaf_node.append(node.seq)
+    # 叶子节点列表不为空
+    else:
+        for n in explored_leaf_node:
+            if operator.eq(node.seq, n) == False:
+                explored_leaf_node.append(node.seq)
+                break
+    # 同时对到达叶子节点这条路径上的所有节点：N+1
+    while True:
+        if node.parents is not None:
+            node.N += 1
+            node = node.parents
+        else:
+            node.N += 1
+            break
 
 
 def init_children(node, seq):
     # 搜集不在当前节点中的元素，放入列表rest_e
     rest_e = []
     for i in seq:
-        # 当前节点元素为空
+        # 当前节点元素为空，即根节点
         if len(node.seq) == 0:
             rest_e.append(i)
         # 当前节点元素非空
         else:
+            is_exit = False
             for j in node.seq:
-                if operator.eq(i, j) == False:
-                    rest_e.append(i) 
+                if operator.eq(i, j) == True:
+                    is_exit = True
                     break
+            if is_exit == False: rest_e.append(i)
     # 取rest_e中的一个元素与当前节点状态组合，生成新的节点            
     for e in rest_e:
         child = Node()
@@ -104,8 +112,8 @@ def best_child(node):
     for sub_node in node.children:
 
         # 在可选的节点里面选择最优
-        if sub_node.Q > 0:
-        # if sub_node.N > 0:
+        # if sub_node.Q > 0:
+        if sub_node.N > 0:
             C = math.sqrt(2.0)
             left = sub_node.Q
             right = math.log(node.N) / sub_node.N
@@ -126,12 +134,11 @@ def expansion(selection_node, score_single_e, seq):
             e_field.append(i.seq[-1])
 
     # 在新元素中选择Q值最大的一个
-    max_e, max_seq = get_max_e(e_field, score_single_e, seq)
-    return max_e, max_seq
+    max_seq = get_max_e(e_field, score_single_e, seq)
+    return max_seq
 
 
 def get_max_e(e_field, score_single_e, seq):
-    max_e = -1
     max_score = -1
     max_seq = []
     for e in e_field:
@@ -139,14 +146,15 @@ def get_max_e(e_field, score_single_e, seq):
         score = score_single_e[e_str]
         if score > max_score:
             max_score = score
-            max_e = e
             max_seq = e
-    return max_e, max_seq
+    return max_seq
 
 
-def evalation(selection_node, max_seq, forecast, real, v, f):
+def evalation(selection_node, max_seq, forecast, real, v, f, explored_leaf_node):
     new_set = copy.deepcopy(selection_node.seq)
     new_set.append(max_seq)
+    # 将新节点加入已探索节点列表
+    explored_leaf_node.append(new_set)
     # 对新状态计算Q值大小
     new_q = get_scores(new_set, forecast, real, v, f)
     return new_q
@@ -205,11 +213,11 @@ def getDistance(u, w):
     return math.sqrt(sum)
 
 
-def backup(selection_node, max_e, new_q):
+def backup(selection_node, max_seq, new_q):
     index = -1
     # 获取计算节点在孩子中的序号
     for i in range(len(selection_node.children)):
-        if operator.eq(selection_node.children[i].seq[-1], max_e):
+        if operator.eq(selection_node.children[i].seq[-1], max_seq):
             index = i
 
     # 从最下层节点开始，对整条路径上的节点：N+1，Q赋值为路径中最大Q值
@@ -263,19 +271,21 @@ def MCTS(forecast, real, seq, M, PT):
     # 开始搜索，最大搜索次数可变
     for i in range(M):
 
+        # node = Node()
+
         # 1、选择，如果所有节点搜索完毕，则跳出循环
         selection_node, all_selected = selection(node, explored_leaf_node, maxLeafNode, seq)
         if all_selected:
             break
 
         # 2、扩展，获得剩余元素中的最大元素值
-        max_e, max_seq = expansion(selection_node, score_single_e, seq)
+        max_seq = expansion(selection_node, score_single_e, seq)
 
         # 3、评价，原状态与最大元素值组合成新状态，获得新状态的Q值
-        new_q = evalation(selection_node, max_seq, forecast, real, v, f)
+        new_q = evalation(selection_node, max_seq, forecast, real, v, f, explored_leaf_node)
 
         # 4、更新，新状态节点至根节点路径中的每个节点：N+1，Q赋值为路径中最大Q值
-        backup(selection_node, max_e, new_q)
+        backup(selection_node, max_seq, new_q)
 
         
 
@@ -588,7 +598,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer1 对每个维度进行搜索，找到BSet 
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool()  #创建进程池
+    pool = multiprocessing.Pool(processes=5)  #创建进程池
     one_dim = []
     process = []
     for i in range(5):
@@ -618,7 +628,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer2 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool()  #创建进程池
+    pool = multiprocessing.Pool(processes=10)  #创建进程池
     t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT,))
     t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT,))
     t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim4_node, 1, 4), M, PT,))
@@ -655,7 +665,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer3 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool()  #创建进程池
+    pool = multiprocessing.Pool(processes=10)  #创建进程池
     t1 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT,))
     t2 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node24, mix_node14, 1, 2, 4), M, PT,))
     t3 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node25, mix_node15, 1, 2, 5), M, PT,))
@@ -690,7 +700,7 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer4 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool()  #创建进程池
+    pool = multiprocessing.Pool(processes=5)  #创建进程池
     t1 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node124, mix_node134, mix_node234, 1, 2, 3, 4), M, PT,))
     t2 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node125, mix_node135, mix_node235, 1, 2, 3, 5), M, PT,))
     t3 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT,))
@@ -750,20 +760,19 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
 if __name__ == '__main__':
     # M 是最大搜索次数
-    # M = 1000000
+    # M = 10
     M = int(sys.argv[1])
     # PT 是Q值的阀值
     # PT = 0.75
     PT = float(sys.argv[2])
     # 5维
+    # forecast = np.load(file='./test_data/Abnormalytime_forecast_PV_table/1538312700000.npy')  #(150, 15, 10, 37, 6)
+    # real = np.load(file='./test_data/Abnormalytime_real_PV_table/1538312700000.npy')
     forecast = np.load(file=sys.argv[3])  #(150, 15, 10, 37, 6)
     real = np.load(file=sys.argv[4])
     forecast = np.array(forecast)
     real = np.array(real)
    
-    # dim5_node = MCTS(forecast, real, get_seq(forecast.shape[4], 4), M, PT)   
-    # print(dim5_node.seq)
-
     # 测试数据
     # dimension, element, 随便写的
     dim1_name = ['Mobile', 'Unicom']
@@ -778,7 +787,7 @@ if __name__ == '__main__':
 
 
     print('---------------------------------------------------------------')
-    print('异常时刻：')
+    print("异常时刻：")
     print(sys.argv[3])
     print("运行时间：")
     print(end_time-start_time)

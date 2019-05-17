@@ -1,5 +1,9 @@
 # rootcause
 
+## 执行命令
+
+> nohup python run.py > record.txt &
+
 ## 文件描述：
 
 - hotspot.py: 二维版本代码
