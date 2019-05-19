@@ -122,7 +122,6 @@ def best_child(node):
             if score > best_score:
                 best = sub_node
                 best_score = score
-    if best is None: best = Node()
     return best
 
 
@@ -241,6 +240,8 @@ def get_best_node(node):
 
 
 def MCTS(forecast, real, seq, M, PT):
+    if operator.eq(seq, [[-1,-1,-1,-1,-1]]) == True:
+        return None
     # 累乘，计算叶子节点的最大数量。当搜索过所有叶子节点时，停止搜索
     maxLeafNode = 1
     for i in range(1, len(seq) + 1):
@@ -264,7 +265,7 @@ def MCTS(forecast, real, seq, M, PT):
 
     # 初始化根节点,Q值记录，最优节点
     node = Node()
-    max_q = 0
+    max_q = -1
     best_node = None
     
 
@@ -287,17 +288,27 @@ def MCTS(forecast, real, seq, M, PT):
         # 4、更新，新状态节点至根节点路径中的每个节点：N+1，Q赋值为路径中最大Q值
         backup(selection_node, max_seq, new_q)
 
-        
+        # node在selection操作中被改变了，需要将node重新指向根节点
+        node = selection_node
+        while node.parents is not None:
+            node = node.parents
 
         # 如果根节点Q值变大，则更新最优节点
         if node.Q > max_q:
             best_node = get_best_node(node)
             max_q = node.Q
+        
+
+        # node在get_best_node操作中被改变了，需要将node重新指向根节点
+        node = selection_node
+        while node.parents is not None:
+            node = node.parents
+
         # 如果新节点的Q值超过预设阀值，则跳出循环
         if new_q >= PT:
             break
-    return best_node
 
+    return best_node
 
 
 def get_seq(number, dimension):
@@ -387,6 +398,13 @@ def get_mix_seq3(node1, node2, node3, col1, col2, col3): # 三个维度的组合
     dim1 = set(dim1[0]).intersection(*dim1[1:])
     dim2 = set(dim2[0]).intersection(*dim2[1:])
     dim3 = set(dim3[0]).intersection(*dim3[1:])
+    if len(dim1) == 0:
+        dim1 = [-1]
+    if len(dim2) == 0:
+        dim2 = [-1]
+    if len(dim3) == 0:
+        dim3 = [-1]
+    
     for d1 in dim1:
         for d2 in dim2:
             for d3 in dim3:
@@ -469,6 +487,16 @@ def get_mix_seq4(node1, node2, node3, node4, col1, col2, col3, col4): # 四个�
     dim2 = set(dim2[0]).intersection(*dim2[1:])
     dim3 = set(dim3[0]).intersection(*dim3[1:])
     dim4 = set(dim4[0]).intersection(*dim4[1:])
+
+    if len(dim1) == 0:
+        dim1 = [-1]
+    if len(dim2) == 0:
+        dim2 = [-1]
+    if len(dim3) == 0:
+        dim3 = [-1]
+    if len(dim4) == 0:
+        dim4 = [-1]
+
     for d1 in dim1:
         for d2 in dim2:
             for d3 in dim3:
@@ -581,6 +609,17 @@ def get_mix_seq5(node1, node2, node3, node4, node5): # 五个维度组合
     dim3 = set(dim3[0]).intersection(*dim3[1:])
     dim4 = set(dim4[0]).intersection(*dim4[1:])
     dim5 = set(dim5[0]).intersection(*dim5[1:])
+    if len(dim1) == 0:
+        dim1 = [-1]
+    if len(dim2) == 0:
+        dim2 = [-1]
+    if len(dim3) == 0:
+        dim3 = [-1]
+    if len(dim4) == 0:
+        dim4 = [-1]
+    if len(dim5) == 0:
+        dim5 = [-1]
+
     for d1 in dim1:
         for d2 in dim2:
             for d3 in dim3:
@@ -592,13 +631,14 @@ def get_mix_seq5(node1, node2, node3, node4, node5): # 五个维度组合
     return seq
 
 
+
 def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT):
 
     
 
     #layer1 对每个维度进行搜索，找到BSet 
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool(processes=5)  #创建进程池
+    pool = multiprocessing.Pool()  #创建进程池
     one_dim = []
     process = []
     for i in range(5):
@@ -628,32 +668,51 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer2 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool(processes=10)  #创建进程池
-    t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT,))
-    t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT,))
-    t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim4_node, 1, 4), M, PT,))
-    t4 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim5_node, 1, 5), M, PT,))
-    t5 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim3_node, 2, 3), M, PT,))
-    t6 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim4_node, 2, 4), M, PT,))
-    t7 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim5_node, 2, 5), M, PT,))
-    t8 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim4_node, 3, 4), M, PT,))
-    t9 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim5_node, 3, 5), M, PT,))
-    t10 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim4_node, dim5_node, 4, 5), M, PT,))
+    pool = multiprocessing.Pool()  #创建进程池
+    if dim1_node is None or dim2_node is None: mix_node12 = None
+    else: t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim2_node, 1, 2), M, PT,))
+    if dim1_node is None or dim3_node is None: mix_node13 = None
+    else: t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim3_node, 1, 3), M, PT,))
+    if dim1_node is None or dim4_node is None: mix_node14 = None
+    else: t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim4_node, 1, 4), M, PT,))
+    if dim1_node is None or dim5_node is None: mix_node15 = None
+    else: t4 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim1_node, dim5_node, 1, 5), M, PT,))
+    if dim2_node is None or dim3_node is None: mix_node23 = None
+    else: t5 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim3_node, 2, 3), M, PT,))
+    if dim2_node is None or dim4_node is None: mix_node24 = None
+    else: t6 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim4_node, 2, 4), M, PT,))
+    if dim2_node is None or dim5_node is None: mix_node25 = None
+    else: t7 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim2_node, dim5_node, 2, 5), M, PT,))
+    if dim3_node is None or dim4_node is None: mix_node34 = None
+    else: t8 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim4_node, 3, 4), M, PT,))
+    if dim3_node is None or dim5_node is None: mix_node35 = None
+    else: t9 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim3_node, dim5_node, 3, 5), M, PT,))
+    if dim4_node is None or dim5_node is None: mix_node45 = None
+    else: t10 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq(dim4_node, dim5_node, 4, 5), M, PT,))
 
     pool.close()
     pool.join()
 
-
-    mix_node12 = t1.get()
-    mix_node13 = t2.get()
-    mix_node14 = t3.get()
-    mix_node15 = t4.get()
-    mix_node23 = t5.get()
-    mix_node24 = t6.get()
-    mix_node25 = t7.get()
-    mix_node34 = t8.get()
-    mix_node35 = t9.get()
-    mix_node45 = t10.get()
+    if dim1_node is None or dim2_node is None: mix_node12 = None
+    else: mix_node12 = t1.get()
+    if dim1_node is None or dim3_node is None: mix_node13 = None
+    else: mix_node13 = t2.get()
+    if dim1_node is None or dim4_node is None: mix_node14 = None
+    else: mix_node14 = t3.get()
+    if dim1_node is None or dim5_node is None: mix_node15 = None
+    else: mix_node15 = t4.get()
+    if dim2_node is None or dim3_node is None: mix_node23 = None
+    else: mix_node23 = t5.get()
+    if dim2_node is None or dim4_node is None: mix_node24 = None
+    else: mix_node24 = t6.get()
+    if dim2_node is None or dim5_node is None: mix_node25 = None
+    else: mix_node25 = t7.get()
+    if dim3_node is None or dim4_node is None: mix_node34 = None
+    else: mix_node34 = t8.get()
+    if dim3_node is None or dim5_node is None: mix_node35 = None
+    else: mix_node35 = t9.get()
+    if dim4_node is None or dim5_node is None: mix_node45 = None
+    else: mix_node45 = t10.get()
 
     two_dim = [mix_node12, mix_node13, mix_node14, mix_node15, mix_node23, mix_node24, mix_node25, mix_node34, mix_node35, mix_node45]
     print('two dimension result')
@@ -665,31 +724,51 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer3 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool(processes=10)  #创建进程池
-    t1 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT,))
-    t2 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node24, mix_node14, 1, 2, 4), M, PT,))
-    t3 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node25, mix_node15, 1, 2, 5), M, PT,))
-    t4 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node34, mix_node14, 1, 3, 4), M, PT,))
-    t5 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node35, mix_node15, 1, 3, 5), M, PT,))
-    t6 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node14, mix_node45, mix_node15, 1, 4, 5), M, PT,))
-    t7 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node34, mix_node24, 2, 3, 4), M, PT,))
-    t8 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node35, mix_node25, 2, 3, 5), M, PT,))
-    t9 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node24, mix_node45, mix_node25, 2, 4, 5), M, PT,))
-    t10 =  pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node34, mix_node45, mix_node35, 3, 4, 5), M, PT,))
+    pool = multiprocessing.Pool()  #创建进程池
+    if mix_node12 is None or mix_node23 is None or mix_node13 is None: mix_node123 = None
+    else: t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT,))
+    if mix_node12 is None or mix_node24 is None or mix_node14 is None: mix_node124 = None
+    else: t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node24, mix_node14, 1, 2, 4), M, PT,))
+    if mix_node12 is None or mix_node25 is None or mix_node15 is None: mix_node125 = None
+    else: t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node25, mix_node15, 1, 2, 5), M, PT,))
+    if mix_node13 is None or mix_node34 is None or mix_node14 is None: mix_node134 = None
+    else: t4 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node34, mix_node14, 1, 3, 4), M, PT,))
+    if mix_node13 is None or mix_node35 is None or mix_node15 is None: mix_node135 = None
+    else: t5 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node13, mix_node35, mix_node15, 1, 3, 5), M, PT,))
+    if mix_node14 is None or mix_node45 is None or mix_node15 is None: mix_node145 = None
+    else: t6 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node14, mix_node45, mix_node15, 1, 4, 5), M, PT,))
+    if mix_node23 is None or mix_node34 is None or mix_node24 is None: mix_node234 = None
+    else: t7 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node34, mix_node24, 2, 3, 4), M, PT,))
+    if mix_node23 is None or mix_node35 is None or mix_node25 is None: mix_node235 = None
+    else: t8 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node23, mix_node35, mix_node25, 2, 3, 5), M, PT,))
+    if mix_node24 is None or mix_node45 is None or mix_node25 is None: mix_node245 = None
+    else: t9 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node24, mix_node45, mix_node25, 2, 4, 5), M, PT,))
+    if mix_node34 is None or mix_node45 is None or mix_node35 is None: mix_node345 = None
+    else: t10 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node34, mix_node45, mix_node35, 3, 4, 5), M, PT,))
 
     pool.close()
     pool.join()
 
-    mix_node123 = t1.get()
-    mix_node124 = t2.get()
-    mix_node125 = t3.get()
-    mix_node134 = t4.get()
-    mix_node135 = t5.get()
-    mix_node145 = t6.get()
-    mix_node234 = t7.get()
-    mix_node235 = t8.get()
-    mix_node245 = t9.get()
-    mix_node345 = t10.get()
+    if mix_node12 is None or mix_node23 is None or mix_node13 is None: mix_node123 = None
+    else: mix_node123 = t1.get()
+    if mix_node12 is None or mix_node24 is None or mix_node14 is None: mix_node124 = None
+    else: mix_node124 = t2.get()
+    if mix_node12 is None or mix_node25 is None or mix_node15 is None: mix_node125 = None
+    else: mix_node125 = t3.get()
+    if mix_node13 is None or mix_node34 is None or mix_node14 is None: mix_node134 = None
+    else: mix_node134 = t4.get()
+    if mix_node13 is None or mix_node35 is None or mix_node15 is None: mix_node135 = None
+    else: mix_node135 = t5.get()
+    if mix_node14 is None or mix_node45 is None or mix_node15 is None: mix_node145 = None
+    else: mix_node145 = t6.get()
+    if mix_node23 is None or mix_node34 is None or mix_node24 is None: mix_node234 = None
+    else: mix_node234 = t7.get()
+    if mix_node23 is None or mix_node35 is None or mix_node25 is None: mix_node235 = None
+    else: mix_node235 = t8.get()
+    if mix_node24 is None or mix_node45 is None or mix_node25 is None: mix_node245 = None
+    else: mix_node245 = t9.get()
+    if mix_node34 is None or mix_node45 is None or mix_node35 is None: mix_node345 = None
+    else: mix_node345 = t10.get()
 
     three_dim = [mix_node123, mix_node124, mix_node125, mix_node134, mix_node135, mix_node145, mix_node234, mix_node235, mix_node245, mix_node345]
     print('three dimension result')
@@ -700,21 +779,31 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
 
     #layer4 搜索
     multiprocessing.freeze_support() # window平台
-    pool = multiprocessing.Pool(processes=5)  #创建进程池
-    t1 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node124, mix_node134, mix_node234, 1, 2, 3, 4), M, PT,))
-    t2 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node125, mix_node135, mix_node235, 1, 2, 3, 5), M, PT,))
-    t3 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT,))
-    t4 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node134, mix_node135, mix_node145, mix_node345, 1, 3, 4, 5), M, PT,))
-    t5 =   pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5), M, PT,))
+    pool = multiprocessing.Pool()  #创建进程池
+    if mix_node123 is None or mix_node124 is None or mix_node134 is None or mix_node234 is None: mix_node1234 = None
+    else: t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node124, mix_node134, mix_node234, 1, 2, 3, 4), M, PT,))
+    if mix_node123 is None or mix_node125 is None or mix_node135 is None or mix_node235 is None: mix_node1235 = None
+    else: t2 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node123, mix_node125, mix_node135, mix_node235, 1, 2, 3, 5), M, PT,))
+    if mix_node124 is None or mix_node125 is None or mix_node145 is None or mix_node245 is None: mix_node1245 = None
+    else: t3 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node124, mix_node125, mix_node145, mix_node245, 1, 2, 4, 5), M, PT,))
+    if mix_node134 is None or mix_node135 is None or mix_node145 is None or mix_node345 is None: mix_node1345 = None
+    else: t4 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node134, mix_node135, mix_node145, mix_node345, 1, 3, 4, 5), M, PT,))
+    if mix_node234 is None or mix_node235 is None or mix_node245 is None or mix_node345 is None: mix_node2345 = None
+    else: t5 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq4(mix_node234, mix_node235, mix_node245, mix_node345, 2, 3, 4, 5), M, PT,))
 
     pool.close()
     pool.join()
-    
-    mix_node1234 = t1.get()
-    mix_node1235 = t2.get()
-    mix_node1245 = t3.get()
-    mix_node1345 = t4.get()
-    mix_node2345 = t5.get()
+
+    if mix_node123 is None or mix_node124 is None or mix_node134 is None or mix_node234 is None: mix_node1234 = None
+    else: mix_node1234 = t1.get()
+    if mix_node123 is None or mix_node125 is None or mix_node135 is None or mix_node235 is None: mix_node1235 = None
+    else: mix_node1235 = t2.get()
+    if mix_node124 is None or mix_node125 is None or mix_node145 is None or mix_node245 is None: mix_node1245 = None
+    else: mix_node1245 = t3.get()
+    if mix_node134 is None or mix_node135 is None or mix_node145 is None or mix_node345 is None: mix_node1345 = None
+    else: mix_node1345 = t4.get()
+    if mix_node234 is None or mix_node235 is None or mix_node245 is None or mix_node345 is None: mix_node2345 = None
+    else: mix_node2345 = t5.get()
 
     four_dim = [mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345]
     print('four dimension result')
@@ -724,7 +813,8 @@ def get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, 
     print()
 
     #layer5 搜索
-    mix_node12345 = MCTS(forecast, real, get_mix_seq5(mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345), M, PT)
+    if mix_node1234 is None or mix_node1235 is None or mix_node1245 is None or mix_node1345 is None or mix_node2345 is None: mix_node12345 = None
+    else:  mix_node12345 = MCTS(forecast, real, get_mix_seq5(mix_node1234, mix_node1235, mix_node1245, mix_node1345, mix_node2345), M, PT)
     print('five dimension result')
     if mix_node12345 is None: print('None')
     else: print(mix_node12345.seq)
@@ -766,8 +856,8 @@ if __name__ == '__main__':
     # PT = 0.75
     PT = float(sys.argv[2])
     # 5维
-    # forecast = np.load(file='./test_data/Abnormalytime_forecast_PV_table/1538312700000.npy')  #(150, 15, 10, 37, 6)
-    # real = np.load(file='./test_data/Abnormalytime_real_PV_table/1538312700000.npy')
+    # forecast = np.load(file='./test_data/Abnormalytime_forecast_PV_table/1539894000000.npy')  #(150, 15, 10, 37, 6)
+    # real = np.load(file='./test_data/Abnormalytime_real_PV_table/1539894000000.npy')
     forecast = np.load(file=sys.argv[3])  #(150, 15, 10, 37, 6)
     real = np.load(file=sys.argv[4])
     forecast = np.array(forecast)
@@ -780,7 +870,30 @@ if __name__ == '__main__':
     dim3_name = ['a', 'b']
     dim4_name = ['1', '2']
     dim5_name = ['!', '@']
+    ##############################################
+    # multiprocessing.freeze_support() # window平台
+    # pool = multiprocessing.Pool()  #创建进程池
+    # mix_node12 = Node()
+    # mix_node23 = Node()
+    # mix_node13 = Node()
+    # mix_node12.seq = [[6, 1, -1, -1, -1]]
+    # mix_node23.seq = [[-1, 1, 2, -1, -1]]
+    # mix_node13.seq = [[6, -1, 5, -1, -1]]
+    # print(get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3))
+    # if mix_node12 is None or mix_node23 is None or mix_node13 is None: mix_node123 = None
+    # else: t1 = pool.apply_async(MCTS, args=(forecast, real, get_mix_seq3(mix_node12, mix_node23, mix_node13, 1, 2, 3), M, PT,))
+
+    # pool.close()
+    # pool.join()
+
+    # if mix_node12 is None or mix_node23 is None or mix_node13 is None: mix_node123 = None
+    # else: mix_node123 = t1.get()
     
+    # if mix_node123 is None: print('None')
+    # else: print(mix_node123.seq)
+    ###################################################
+
+
     start_time = datetime.datetime.now()
     name, Q = get_result(dim1_name, dim2_name, dim3_name, dim4_name, dim5_name, forecast, real, M, PT)
     end_time = datetime.datetime.now()
