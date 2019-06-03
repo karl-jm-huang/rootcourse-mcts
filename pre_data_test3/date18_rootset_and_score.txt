@@ -1,0 +1,597 @@
+cannot_deal_with/forecast/1539376500000.npy
+[[-1, 10, -1, 10, -1]]
+0.008257569759074324
+cannot_deal_with/forecast/1540044300000.npy
+[[-1, -1, -1, 28, 3], [-1, -1, -1, 25, 2], [-1, -1, -1, 25, 3]]
+0.2877941280472045
+cannot_deal_with/forecast/1540520100000.npy
+[[23, 12, -1, -1, -1]]
+0.018326633321320895
+cannot_deal_with/forecast/1540038900000.npy
+[[-1, 8, -1, -1, -1], [-1, 13, -1, -1, -1], [-1, 4, -1, -1, -1], [-1, 11, -1, -1, -1], [-1, 12, -1, -1, -1]]
+0.6501426600808196
+cannot_deal_with/forecast/1539894000000.npy
+[[-1, -1, 5, 35, -1]]
+0.009699963490097718
+cannot_deal_with/forecast/1539601500000.npy
+[[-1, -1, -1, 10, -1]]
+0.0018561194980983853
+cannot_deal_with/forecast/1539718500000.npy
+[[-1, -1, -1, 18, -1], [-1, -1, -1, 11, -1]]
+0.13087697712453306
+cannot_deal_with/forecast/1540037100000.npy
+[[46, 11, -1, -1, -1]]
+0.0035755467428637555
+cannot_deal_with/forecast/1540439700000.npy
+[[-1, -1, -1, 23, -1], [-1, -1, -1, 13, -1]]
+0.8794266156009519
+cannot_deal_with/forecast/1540255500000.npy
+[[6, -1, -1, -1, -1]]
+0.003298813943896861
+./test_data/Abnormalytime_forecast_PV_table/1539567000000.npy
+[[38, 10, -1, -1, -1], [6, 10, -1, -1, -1], [38, 11, -1, -1, -1]]
+0.8538294372162275
+./test_data/Abnormalytime_forecast_PV_table/1540130400000.npy
+[[46, -1, -1, -1, -1]]
+0.014845656840639099
+./test_data/Abnormalytime_forecast_PV_table/1540194900000.npy
+[[38, -1, -1, -1, 3], [6, -1, -1, -1, 3], [28, -1, -1, -1, 3]]
+0.9049967329194479
+./test_data/Abnormalytime_forecast_PV_table/1540423500000.npy
+[[-1, -1, -1, -1, 3], [-1, -1, -1, -1, 4]]
+0.003718658653254603
+./test_data/Abnormalytime_forecast_PV_table/1540470000000.npy
+[[-1, -1, 5, 1, 3]]
+0.9567872154074201
+./test_data/Abnormalytime_forecast_PV_table/1539700500000.npy 
+[[-1, 10, -1, 35, 3], [-1, 11, -1, 35, 3]] 
+0.5533346343185044 
+./test_data/Abnormalytime_forecast_PV_table/1539372600000.npy 
+[[6, -1, 5, -1, -1], [38, -1, 1, -1, -1]]
+0.7753498796762273
+./test_data/Abnormalytime_forecast_PV_table/1539721200000.npy
+[[-1, 8, -1, -1, -1]] 
+0.008405234843873899
+./test_data/Abnormalytime_forecast_PV_table/1540529100000.npy
+[[-1, -1, 5, 10, -1], [-1, -1, 1, 1, -1]]
+0.9291079561125916
+./test_data/Abnormalytime_forecast_PV_table/1540537500000.npy
+[[-1, -1, -1, 25, -1], [-1, -1, -1, 3, -1]]
+0.9295081541503362
+./test_data/Abnormalytime_forecast_PV_table/1540500300000.npy
+[[-1, -1, -1, -1, 4], [-1, -1, -1, -1, 2]]
+0.008850159785370959
+./test_data/Abnormalytime_forecast_PV_table/1540516200000.npy
+[[-1, -1, -1, 25, -1], [-1, -1, -1, 28, -1]]
+0.3145663088207472
+./test_data/Abnormalytime_forecast_PV_table/1540479300000.npy
+[[-1, 10, 5, -1, 3], [-1, 10, 1, -1, 3], [-1, 10, 1, -1, 4], [-1, 10, 5, -1, 4]]
+0.6054047583240572
+./test_data/Abnormalytime_forecast_PV_table/1540466700000.npy
+[[-1, 10, -1, 16, -1], [-1, 10, -1, 2, -1]]
+0.43214673545115767
+./test_data/Abnormalytime_forecast_PV_table/1540447200000.npy
+[[-1, 10, -1, -1, -1]]
+0.0016593923821536238
+./test_data/Abnormalytime_forecast_PV_table/1540553700000.npy
+[[38, -1, -1, -1, -1]]
+0.8244769819356849
+./test_data/Abnormalytime_forecast_PV_table/1540456200000.npy
+[[-1, -1, 1, -1, -1], [-1, -1, 5, -1, -1]]
+0.831687073883655
+./test_data/Abnormalytime_forecast_PV_table/1540526700000.npy
+[[1, 1, -1, -1, -1]]
+0.0031582492464686807
+./test_data/Abnormalytime_forecast_PV_table/1540544400000.npy
+[[6, 10, -1, -1, -1]]
+0.006959114604190186
+./test_data/Abnormalytime_forecast_PV_table/1540550700000.npy
+[[-1, 10, 5, -1, -1]]
+0.8510081529190036
+./test_data/Abnormalytime_forecast_PV_table/1540443000000.npy
+[[39, -1, -1, -1, -1], [14, -1, -1, -1, -1]]
+0.7123935831716981
+./test_data/Abnormalytime_forecast_PV_table/1540563600000.npy
+[[-1, 9, 4, -1, -1]]
+0.01839208124999714
+./test_data/Abnormalytime_forecast_PV_table/1540495500000.npy
+[[-1, -1, 5, 4, -1], [-1, -1, 5, 35, -1], [-1, -1, 1, 4, -1]]
+0.5025665987588553
+./test_data/Abnormalytime_forecast_PV_table/1540498500000.npy
+[[-1, -1, -1, -1, 2], [-1, -1, -1, -1, 3], [-1, -1, -1, -1, 4]]
+0.5213826206124663
+./test_data/Abnormalytime_forecast_PV_table/1540539600000.npy
+[[-1, -1, -1, -1, 3], [-1, -1, -1, -1, 4], [-1, -1, -1, -1, 2]]
+0.6156372667405311
+./test_data/Abnormalytime_forecast_PV_table/1540450800000.npy
+[[38, 8, -1, -1, 3], [6, 10, -1, -1, 3], [38, 10, -1, -1, 3]]
+0.8089960508131082
+./test_data/Abnormalytime_forecast_PV_table/1540509900000.npy
+[[-1, 10, -1, -1, -1]]
+0.011399011107193657
+./test_data/Abnormalytime_forecast_PV_table/1540475700000.npy
+[[6, 10, -1, 35, -1]]
+0.0010256447753650422
+./test_data/Abnormalytime_forecast_PV_table/1540460100000.npy
+[[-1, -1, -1, 24, 4], [-1, -1, -1, 24, 3]]
+0.1752160277760244
+./test_data/Abnormalytime_forecast_PV_table/1540522200000.npy
+[[23, -1, -1, -1, -1], [31, -1, -1, -1, -1]]
+0.016958449780831608
+./test_data/Abnormalytime_forecast_PV_table/1540463700000.npy
+[[28, 8, -1, -1, -1]]
+0.0008075531226104937
+./test_data/Abnormalytime_forecast_PV_table/1540542600000.npy
+[[6, -1, -1, -1, 3]]
+0.8597879789502344
+./test_data/Abnormalytime_forecast_PV_table/1540513800000.npy
+[[-1, -1, -1, 31, -1], [-1, -1, -1, 15, -1]]
+0.8815468752371246
+./test_data/Abnormalytime_forecast_PV_table/1540566000000.npy
+[[17, -1, 5, -1, 3], [6, -1, 5, -1, 3], [6, -1, 5, -1, 1]]
+0.6166613561752383
+./test_data/Abnormalytime_forecast_PV_table/1540454400000.npy
+[[-1, -1, 5, -1, -1], [-1, -1, 1, -1, -1]]
+0.8732821264229249
+./test_data/Abnormalytime_forecast_PV_table/1540472100000.npy
+[[-1, -1, -1, 1, -1], [-1, -1, -1, 26, -1]]
+0.4548618266192467
+./test_data/Abnormalytime_forecast_PV_table/1540458000000.npy
+[[-1, -1, -1, -1, 4], [-1, -1, -1, -1, 2]]
+0.0011181309557506403
+./test_data/Abnormalytime_forecast_PV_table/1540524600000.npy
+[[41, 8, -1, 7, -1], [6, 10, -1, 13, -1]]
+0.23223713829820058
+./test_data/Abnormalytime_forecast_PV_table/1540534500000.npy
+[[6, -1, -1, -1, -1], [38, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.9349035315469487
+./test_data/Abnormalytime_forecast_PV_table/1540561200000.npy
+[[-1, -1, 5, -1, -1], [-1, -1, 1, -1, -1]]
+0.0005406391793111309
+./test_data/Abnormalytime_forecast_PV_table/1540548300000.npy
+[[2, -1, -1, -1, -1]]
+0.008558551176175544
+./test_data/Abnormalytime_forecast_PV_table/1540477500000.npy
+[[-1, -1, -1, 13, -1], [-1, -1, -1, 7, -1]]
+0.4635960631223963
+./test_data/Abnormalytime_forecast_PV_table/1540532400000.npy
+[[-1, -1, 5, -1, 3], [-1, -1, 1, -1, 3]]
+0.07018502489611833
+./test_data/Abnormalytime_forecast_PV_table/1540444800000.npy
+[[-1, 10, -1, 10, 3], [-1, 10, -1, 19, 3]]
+0.46470143837161837
+./test_data/Abnormalytime_forecast_PV_table/1540557600000.npy
+[[28, -1, 1, -1, -1]]
+0.9781758904302517
+./test_data/Abnormalytime_forecast_PV_table/1539524400000.npy
+[[-1, -1, -1, 19, -1]]
+9.243897837940551e-05
+./test_data/Abnormalytime_forecast_PV_table/1539689400000.npy
+[[38, 10, -1, 1, -1]]
+0.3899245342211206
+./test_data/Abnormalytime_forecast_PV_table/1539563400000.npy
+[[-1, -1, -1, -1, 3], [-1, -1, -1, -1, 2]]
+0.06990933895076701
+./test_data/Abnormalytime_forecast_PV_table/1539611100000.npy
+[[-1, 9, -1, -1, -1], [-1, 10, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 3, -1, -1, -1]]
+0.5182119797612604
+./test_data/Abnormalytime_forecast_PV_table/1539645900000.npy
+[[-1, 10, -1, 19, -1]]
+0.005465893043138492
+./test_data/Abnormalytime_forecast_PV_table/1539480900000.npy
+[[-1, -1, 1, -1, -1], [-1, -1, 5, -1, -1]]
+0.017136655079731056
+./test_data/Abnormalytime_forecast_PV_table/1539687600000.npy
+[[36, -1, 5, -1, -1], [6, -1, 5, -1, -1]]
+0.7639317266068087
+./test_data/Abnormalytime_forecast_PV_table/1539606000000.npy
+[[1, 1, -1, -1, -1]]
+0.01898612480677797
+./test_data/Abnormalytime_forecast_PV_table/1539477300000.npy
+[[-1, -1, -1, 24, -1], [-1, -1, -1, 35, -1]]
+0.14005181416401247
+./test_data/Abnormalytime_forecast_PV_table/1539613500000.npy
+[[-1, -1, 5, 11, -1]]
+0.936863454692816
+./test_data/Abnormalytime_forecast_PV_table/1539519000000.npy
+[[-1, 7, -1, -1, -1]]
+0.08152694773127112
+./test_data/Abnormalytime_forecast_PV_table/1539653700000.npy
+[[46, -1, -1, -1, -1], [38, -1, -1, -1, -1]]
+0.2758718485966124
+./test_data/Abnormalytime_forecast_PV_table/1539441300000.npy
+[[-1, -1, -1, -1, 3], [-1, -1, -1, -1, 2]]
+0.009810609683568838
+./test_data/Abnormalytime_forecast_PV_table/1539696900000.npy
+[[46, 11, -1, -1, -1]]
+0.001904329145822059
+./test_data/Abnormalytime_forecast_PV_table/1539521100000.npy
+[[-1, 8, -1, -1, -1], [-1, 7, -1, -1, -1]]
+0.09660915674046622
+./test_data/Abnormalytime_forecast_PV_table/1539603900000.npy
+[[38, -1, -1, -1, -1]]
+0.0010834016600672625
+./test_data/Abnormalytime_forecast_PV_table/1539428700000.npy
+[[28, -1, -1, -1, -1]]
+0.011908239312351299
+./test_data/Abnormalytime_forecast_PV_table/1539547500000.npy
+[[-1, -1, -1, -1, 3], [-1, -1, -1, -1, 1], [-1, -1, -1, -1, 4]]
+0.6998526384665945
+./test_data/Abnormalytime_forecast_PV_table/1539647700000.npy
+[[2, -1, -1, -1, -1]]
+0.02980710253814356
+./test_data/Abnormalytime_forecast_PV_table/1539559800000.npy
+[[-1, 4, -1, -1, -1], [-1, 10, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 12, -1, -1, -1]]
+0.5583128934526654
+./test_data/Abnormalytime_forecast_PV_table/1539474300000.npy
+[[6, -1, -1, -1, -1]]
+0.751331461966594
+./test_data/Abnormalytime_forecast_PV_table/1539545100000.npy
+[[-1, -1, -1, -1, 1], [-1, -1, -1, -1, 3]]
+0.022166366941331006
+./test_data/Abnormalytime_forecast_PV_table/1539393000000.npy
+[[-1, 5, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 10, -1, -1, -1], [-1, 6, -1, -1, -1]]
+0.6025132492514662
+./test_data/Abnormalytime_forecast_PV_table/1539390900000.npy
+[[6, -1, -1, -1, -1], [38, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.6253884055501566
+./test_data/Abnormalytime_forecast_PV_table/1539439200000.npy
+[[46, -1, -1, -1, -1], [14, -1, -1, -1, -1]]
+0.1186255278959335
+./test_data/Abnormalytime_forecast_PV_table/1539459600000.npy
+[[38, -1, 1, -1, 3], [6, -1, 5, -1, 3], [46, -1, 1, -1, 3], [6, -1, 5, -1, 4]]
+0.7601854040576174
+./test_data/Abnormalytime_forecast_PV_table/1539608400000.npy
+[[-1, 10, -1, 10, -1], [-1, 8, -1, 25, -1], [-1, 8, -1, 10, -1]]
+0.1679774067675075
+./test_data/Abnormalytime_forecast_PV_table/1539514800000.npy
+[[49, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.029169105428108688
+./test_data/Abnormalytime_forecast_PV_table/1539632400000.npy
+[[-1, -1, -1, 10, -1], [-1, -1, -1, 15, -1]]
+0.22377811710486473
+./test_data/Abnormalytime_forecast_PV_table/1539628800000.npy
+[[-1, 10, -1, -1, -1]]
+0.012069359323978679
+./test_data/Abnormalytime_forecast_PV_table/1539651600000.npy
+[[-1, 10, -1, -1, -1]]
+0.006004192510395523
+./test_data/Abnormalytime_forecast_PV_table/1539693000000.npy
+[[-1, -1, -1, -1, 1], [-1, -1, -1, -1, 3]]
+0.5592297499266622
+./test_data/Abnormalytime_forecast_PV_table/1539517200000.npy
+[[-1, 1, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 9, -1, -1, -1], [-1, 10, -1, -1, -1]]
+0.6318379694716414
+./test_data/Abnormalytime_forecast_PV_table/1539528000000.npy
+[[-1, 8, -1, -1, -1], [-1, 10, -1, -1, -1], [-1, 12, -1, -1, -1], [-1, 11, -1, -1, -1], [-1, 4, -1, -1, -1]]
+0.6397946114128796
+./test_data/Abnormalytime_forecast_PV_table/1539634500000.npy
+[[2, -1, -1, -1, -1]]
+0.010377307265853286
+./test_data/Abnormalytime_forecast_PV_table/1540032900000.npy
+[[-1, -1, 1, -1, -1], [-1, -1, 5, -1, -1]]
+0.43663509769594233
+./test_data/Abnormalytime_forecast_PV_table/1539911700000.npy
+[[-1, -1, -1, 5, -1]]
+0.9574105609863567
+./test_data/Abnormalytime_forecast_PV_table/1540024500000.npy
+[[47, -1, -1, -1, -1], [38, -1, -1, -1, -1]]
+0.8161222813294512
+./test_data/Abnormalytime_forecast_PV_table/1539956400000.npy
+[[18, -1, -1, -1, -1], [14, -1, -1, -1, -1], [6, -1, -1, -1, -1]]
+0.6571315036878289
+./test_data/Abnormalytime_forecast_PV_table/1539823500000.npy
+[[38, -1, -1, -1, -1], [14, -1, -1, -1, -1]]
+0.32857857024269554
+./test_data/Abnormalytime_forecast_PV_table/1539784500000.npy
+[[6, -1, -1, -1, -1]]
+0.21479834764428385
+./test_data/Abnormalytime_forecast_PV_table/1539782400000.npy
+[[38, -1, 1, -1, -1], [28, -1, 1, -1, -1]]
+0.8936989432425307
+./test_data/Abnormalytime_forecast_PV_table/1539786300000.npy
+[[-1, 11, -1, -1, 2], [-1, 10, -1, -1, 4], [-1, 10, -1, -1, 2]]
+0.37708671699079754
+./test_data/Abnormalytime_forecast_PV_table/1539739200000.npy
+[[-1, 1, -1, -1, -1], [-1, 10, -1, -1, -1], [-1, 8, -1, -1, -1]]
+0.5670871431023926
+./test_data/Abnormalytime_forecast_PV_table/1539778500000.npy
+[[-1, 10, -1, 10, -1]]
+0.0003715332088378709
+./test_data/Abnormalytime_forecast_PV_table/1539775500000.npy
+[[6, -1, 5, -1, -1], [34, -1, 5, -1, -1]]
+0.8477042632301918
+./test_data/Abnormalytime_forecast_PV_table/1539948000000.npy
+[[-1, 10, 1, -1, -1], [-1, 10, 5, -1, -1], [-1, 8, 1, -1, -1]]
+0.8538365627773397
+./test_data/Abnormalytime_forecast_PV_table/1539958200000.npy
+[[46, -1, -1, -1, -1], [34, -1, -1, -1, -1]]
+0.5792133812177809
+./test_data/Abnormalytime_forecast_PV_table/1539992700000.npy
+[[-1, -1, -1, 29, -1]]
+0.9038082916336507
+./test_data/Abnormalytime_forecast_PV_table/1539864300000.npy
+[[-1, -1, -1, 10, -1]]
+0.8354774148904218
+./test_data/Abnormalytime_forecast_PV_table/1539905100000.npy
+[[6, -1, -1, -1, -1]]
+0.0008877131435469643
+./test_data/Abnormalytime_forecast_PV_table/1539866400000.npy
+[[-1, -1, -1, 7, -1], [-1, -1, -1, 10, -1], [-1, -1, -1, 35, -1]]
+0.5700804563063111
+./test_data/Abnormalytime_forecast_PV_table/1539870600000.npy
+[[38, -1, -1, -1, -1], [30, -1, -1, -1, -1]]
+0.5743931536875502
+./test_data/Abnormalytime_forecast_PV_table/1539861300000.npy
+[[-1, -1, 5, 35, 3]]
+0.9664661418219931
+./test_data/Abnormalytime_forecast_PV_table/1539819000000.npy
+[[-1, 12, -1, -1, -1], [-1, 1, -1, -1, -1]]
+0.353814053602853
+./test_data/Abnormalytime_forecast_PV_table/1539954300000.npy
+[[-1, 11, -1, -1, 2], [-1, 8, -1, -1, 2]]
+0.04997886193264245
+./test_data/Abnormalytime_forecast_PV_table/1539732600000.npy
+[[38, -1, -1, 3, -1], [6, -1, -1, 21, -1]]
+0.3692128866312998
+./test_data/Abnormalytime_forecast_PV_table/1539826200000.npy
+[[-1, 10, -1, -1, -1], [-1, 8, -1, -1, -1]]
+0.014303437776970407
+./test_data/Abnormalytime_forecast_PV_table/1539949800000.npy
+[[39, 4, -1, -1, -1], [28, 8, -1, -1, -1], [2, 8, -1, -1, -1], [28, 4, -1, -1, -1]]
+0.6068941558379177
+./test_data/Abnormalytime_forecast_PV_table/1539889800000.npy
+[[-1, -1, 1, -1, -1], [-1, -1, 5, -1, -1], [-1, -1, 4, -1, -1]]
+0.6202420329363839
+./test_data/Abnormalytime_forecast_PV_table/1539981000000.npy
+[[-1, -1, 5, 10, -1], [-1, -1, 5, 35, -1], [-1, -1, 4, 10, -1]]
+0.4478450257487445
+./test_data/Abnormalytime_forecast_PV_table/1539978300000.npy
+[[-1, -1, 5, -1, 3], [-1, -1, 1, -1, 3]]
+0.8678237415880168
+./test_data/Abnormalytime_forecast_PV_table/1539872400000.npy
+[[46, 11, -1, -1, -1], [34, 3, -1, -1, -1]]
+0.7426257641194062
+./test_data/Abnormalytime_forecast_PV_table/1539960600000.npy
+[[42, -1, -1, -1, -1], [46, -1, -1, -1, -1]]
+0.38292095866976217
+./test_data/Abnormalytime_forecast_PV_table/1539807300000.npy
+[[19, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.07345676504364174
+./test_data/Abnormalytime_forecast_PV_table/1540000800000.npy
+[[-1, -1, -1, 21, 3], [-1, -1, -1, 12, 3]]
+0.8501308039373143
+./test_data/Abnormalytime_forecast_PV_table/1539891900000.npy
+[[-1, -1, -1, 32, -1], [-1, -1, -1, 35, -1]]
+0.6106715844796071
+./test_data/Abnormalytime_forecast_PV_table/1539909600000.npy
+[[6, -1, 5, -1, -1], [38, -1, 1, -1, -1], [28, -1, 1, -1, -1]]
+0.8836938270179593
+./test_data/Abnormalytime_forecast_PV_table/1539951900000.npy
+[[25, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.3160918474733103
+./test_data/Abnormalytime_forecast_PV_table/1539996300000.npy
+[[-1, -1, -1, 29, -1]]
+0.010006065082316606
+./test_data/Abnormalytime_forecast_PV_table/1539804900000.npy
+[[6, -1, -1, -1, 3], [38, -1, -1, -1, 3]]
+0.7886965597575094
+./test_data/Abnormalytime_forecast_PV_table/1540061400000.npy
+[[-1, -1, -1, 18, -1], [-1, -1, -1, 20, -1]]
+0.5284327199746788
+./test_data/Abnormalytime_forecast_PV_table/1540236000000.npy
+[[2, -1, -1, -1, -1]]
+0.0032063349810828035
+./test_data/Abnormalytime_forecast_PV_table/1540087500000.npy
+[[-1, -1, -1, 3, 3], [-1, -1, -1, 6, 3]]
+0.8523910318678382
+./test_data/Abnormalytime_forecast_PV_table/1540169100000.npy
+[[15, 9, -1, -1, -1], [6, 10, -1, -1, -1], [6, 9, -1, -1, -1]]
+0.7605216529072332
+./test_data/Abnormalytime_forecast_PV_table/1540132200000.npy
+[[-1, -1, -1, 15, 3], [-1, -1, -1, 17, 3], [-1, -1, -1, 11, 4]]
+0.8358428038840305
+./test_data/Abnormalytime_forecast_PV_table/1540085700000.npy
+[[-1, 10, 5, -1, -1], [-1, 9, 4, -1, -1]]
+0.8716777317527573
+./test_data/Abnormalytime_forecast_PV_table/1540164000000.npy
+[[-1, -1, -1, 10, -1], [-1, -1, -1, 21, -1]]
+0.9024203821880694
+./test_data/Abnormalytime_forecast_PV_table/1540219200000.npy
+[[-1, 6, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 12, -1, -1, -1]]
+0.569855992293655
+./test_data/Abnormalytime_forecast_PV_table/1540212300000.npy
+[[28, -1, -1, -1, 3]]
+0.00235520700322589
+./test_data/Abnormalytime_forecast_PV_table/1540152300000.npy
+[[-1, -1, -1, 4, -1]]
+0.003550805524644929
+./test_data/Abnormalytime_forecast_PV_table/1540238700000.npy
+[[-1, -1, -1, 13, -1], [-1, -1, -1, 19, -1]]
+0.17005122082590263
+./test_data/Abnormalytime_forecast_PV_table/1540082100000.npy
+[[-1, -1, 5, -1, -1], [-1, -1, 1, -1, -1]]
+0.0052192956449349515
+./test_data/Abnormalytime_forecast_PV_table/1540065900000.npy
+[[6, -1, -1, 11, -1]]
+0.23129619001284685
+./test_data/Abnormalytime_forecast_PV_table/1540214100000.npy
+[[-1, -1, 3, -1, -1], [-1, -1, 5, -1, -1]]
+0.0010208825967283897
+./test_data/Abnormalytime_forecast_PV_table/1540127400000.npy
+[[-1, 10, -1, -1, 3], [-1, 11, -1, -1, 3], [-1, 12, -1, -1, 3]]
+0.8567585466087699
+./test_data/Abnormalytime_forecast_PV_table/1540197600000.npy
+[[-1, -1, -1, 23, -1], [-1, -1, -1, 1, -1]]
+0.9413042803276244
+./test_data/Abnormalytime_forecast_PV_table/1540124100000.npy
+[[-1, 13, -1, -1, -1], [-1, 8, -1, -1, -1], [-1, 10, -1, -1, -1]]
+0.6366683632124288
+./test_data/Abnormalytime_forecast_PV_table/1540108800000.npy
+[[46, -1, -1, 35, -1]]
+0.003246285842022245
+./test_data/Abnormalytime_forecast_PV_table/1540069500000.npy
+[[2, -1, -1, -1, -1], [38, -1, -1, -1, -1]]
+0.4499456503626461
+./test_data/Abnormalytime_forecast_PV_table/1540201200000.npy
+[[14, 12, -1, -1, -1], [6, 10, -1, -1, -1]]
+0.10399024234460652
+./test_data/Abnormalytime_forecast_PV_table/1540240800000.npy
+[[39, -1, -1, -1, -1]]
+0.07136630110456332
+./test_data/Abnormalytime_forecast_PV_table/1540208100000.npy
+[[-1, 9, -1, -1, -1]]
+0.0423204046429827
+./test_data/Abnormalytime_forecast_PV_table/1540216800000.npy
+[[1, -1, -1, -1, -1]]
+0.040183577385531244
+./test_data/Abnormalytime_forecast_PV_table/1540112400000.npy
+[[-1, -1, -1, 18, -1]]
+0.8547087382460623
+./test_data/Abnormalytime_forecast_PV_table/1540119300000.npy
+[[-1, 10, -1, -1, -1]]
+0.0006556027399267084
+./test_data/Abnormalytime_forecast_PV_table/1540041000000.npy
+[[28, -1, -1, -1, -1]]
+0.0032839644975375393
+./test_data/Abnormalytime_forecast_PV_table/1540171800000.npy
+[[-1, 10, -1, 17, -1], [-1, 10, -1, 10, -1]]
+0.2012427146681296
+./test_data/Abnormalytime_forecast_PV_table/1540154700000.npy
+[[46, 11, 1, -1, -1], [6, 10, 5, -1, -1]]
+0.5241542439037128
+./test_data/Abnormalytime_forecast_PV_table/1540046100000.npy
+[[-1, 10, -1, -1, -1]]
+0.0013526863767087116
+./test_data/Abnormalytime_forecast_PV_table/1540114200000.npy
+[[-1, 10, -1, 18, -1]]
+0.026271954019879806
+./test_data/Abnormalytime_forecast_PV_table/1540173900000.npy
+[[-1, -1, -1, 23, -1], [-1, -1, -1, 24, -1]]
+0.8474648570157854
+./test_data/Abnormalytime_forecast_PV_table/1540205700000.npy
+[[1, -1, -1, -1, -1], [6, -1, -1, -1, -1]]
+0.7956198746766627
+./test_data/Abnormalytime_forecast_PV_table/1540150200000.npy
+[[-1, 12, -1, 4, -1], [-1, 12, -1, 19, -1]]
+0.3505634402350062
+./test_data/Abnormalytime_forecast_PV_table/1540251000000.npy
+[[6, -1, -1, -1, -1]]
+0.8322427244071089
+./test_data/Abnormalytime_forecast_PV_table/1540080000000.npy
+[[-1, -1, 5, -1, -1]]
+0.7822377709778081
+./test_data/Abnormalytime_forecast_PV_table/1540260600000.npy
+[[28, -1, -1, -1, -1], [38, -1, -1, -1, -1], [6, -1, -1, -1, -1]]
+0.8692636947447994
+./test_data/Abnormalytime_forecast_PV_table/1540281900000.npy
+[[46, -1, -1, -1, -1], [44, -1, -1, -1, -1]]
+0.6008197324296164
+./test_data/Abnormalytime_forecast_PV_table/1540380900000.npy
+[[-1, -1, 5, 1, -1], [-1, -1, 5, 23, -1], [-1, -1, 1, 1, -1]]
+0.3936447860151514
+./test_data/Abnormalytime_forecast_PV_table/1540291500000.npy
+[[-1, 10, -1, -1, -1]]
+0.010012339930476233
+./test_data/Abnormalytime_forecast_PV_table/1540386300000.npy
+[[1, -1, -1, -1, -1]]
+0.03472561292286458
+./test_data/Abnormalytime_forecast_PV_table/1540271400000.npy
+[[16, -1, -1, -1, -1], [6, -1, -1, -1, -1], [28, -1, -1, -1, -1], [38, -1, -1, -1, -1]]
+0.649314294040531
+./test_data/Abnormalytime_forecast_PV_table/1540369800000.npy
+[[-1, -1, -1, 24, -1], [-1, -1, -1, 1, -1]]
+0.9009835117049175
+./test_data/Abnormalytime_forecast_PV_table/1540377300000.npy
+[[28, 8, -1, -1, -1]]
+0.0011679051565820497
+./test_data/Abnormalytime_forecast_PV_table/1540305300000.npy
+[[38, -1, -1, -1, -1], [6, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.65141887743636
+./test_data/Abnormalytime_forecast_PV_table/1540384500000.npy
+[[28, -1, -1, -1, -1]]
+0.002189301131468091
+./test_data/Abnormalytime_forecast_PV_table/1540302900000.npy
+[[-1, -1, -1, 16, -1], [-1, -1, -1, 14, -1]]
+0.4702204731911339
+./test_data/Abnormalytime_forecast_PV_table/1540367400000.npy
+[[6, -1, 5, -1, -1], [28, -1, 1, -1, -1]]
+0.9040719973093915
+./test_data/Abnormalytime_forecast_PV_table/1540349100000.npy
+[[-1, 4, -1, -1, -1]]
+0.03740275370817525
+./test_data/Abnormalytime_forecast_PV_table/1540287300000.npy
+[[38, 10, -1, -1, -1]]
+0.001472195729405712
+./test_data/Abnormalytime_forecast_PV_table/1540322400000.npy
+[[-1, 11, -1, 15, -1], [-1, 11, -1, 35, -1], [-1, 7, -1, 35, -1]]
+0.2490906377966512
+./test_data/Abnormalytime_forecast_PV_table/1540389900000.npy
+[[-1, -1, -1, 28, -1], [-1, -1, -1, 19, -1]]
+0.2833457637427248
+./test_data/Abnormalytime_forecast_PV_table/1540358400000.npy
+[[28, -1, 1, -1, -1]]
+0.7819160586768366
+./test_data/Abnormalytime_forecast_PV_table/1540285500000.npy
+[[38, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.8216562486346495
+./test_data/Abnormalytime_forecast_PV_table/1540392300000.npy
+[[-1, -1, 5, 10, -1], [-1, -1, 5, 5, -1], [-1, -1, 4, 10, -1]]
+0.4370684403767622
+./test_data/Abnormalytime_forecast_PV_table/1540326600000.npy
+[[23, -1, -1, -1, -1]]
+0.004936087043794668
+./test_data/Abnormalytime_forecast_PV_table/1540409100000.npy
+[[-1, -1, -1, 4, -1], [-1, -1, -1, 5, -1]]
+0.26365881436374783
+./test_data/Abnormalytime_forecast_PV_table/1540407000000.npy
+[[-1, -1, -1, 5, -1]]
+0.2706001004936781
+./test_data/Abnormalytime_forecast_PV_table/1540346400000.npy
+[[-1, 4, 2, -1, -1], [-1, 4, 6, -1, -1]]
+0.29904267799039574
+./test_data/Abnormalytime_forecast_PV_table/1540280100000.npy
+[[43, -1, -1, -1, -1], [2, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.7490524204135087
+./test_data/Abnormalytime_forecast_PV_table/1540320000000.npy
+[[-1, 10, -1, -1, -1]]
+0.0018453483901154089
+./test_data/Abnormalytime_forecast_PV_table/1540343100000.npy
+[[38, -1, -1, -1, -1], [46, -1, -1, -1, -1], [3, -1, -1, -1, -1], [28, -1, -1, -1, -1]]
+0.8030471792214469
+./test_data/Abnormalytime_forecast_PV_table/1540372200000.npy
+[[-1, -1, -1, 24, -1]]
+0.041087265515113325
+./test_data/Abnormalytime_forecast_PV_table/1540431300000.npy
+[[38, -1, -1, -1, -1]]
+0.7864696042823007
+./test_data/Abnormalytime_forecast_PV_table/1540352700000.npy
+[[38, -1, -1, -1, -1], [6, -1, -1, -1, -1]]
+0.36189359937484755
+./test_data/Abnormalytime_forecast_PV_table/1540298700000.npy
+[[-1, 10, -1, -1, -1]]
+0.0018974007848541197
+./test_data/Abnormalytime_forecast_PV_table/1540436400000.npy
+[[42, -1, -1, 32, -1]]
+0.17647487202125745
+./test_data/Abnormalytime_forecast_PV_table/1540337100000.npy
+[[-1, 10, -1, 12, 3]]
+0.920156522920714
+./test_data/Abnormalytime_forecast_PV_table/1540356300000.npy
+[[-1, -1, 1, -1, 3], [-1, -1, 5, -1, 3]]
+0.754484540413674
+./test_data/Abnormalytime_forecast_PV_table/1540258500000.npy
+[[34, 4, -1, -1, 3], [6, 10, -1, -1, 3]]
+0.19808488392737644
+./test_data/Abnormalytime_forecast_PV_table/1540434000000.npy
+[[-1, 10, -1, 35, -1], [-1, 10, -1, 10, -1]]
+0.23962616882002719
+./test_data/Abnormalytime_forecast_PV_table/1540428300000.npy
+[[-1, 10, -1, -1, -1]]
+0.006545892941680065
+./test_data/Abnormalytime_forecast_PV_table/1540294500000.npy
+[[6, -1, -1, -1, -1]]
+0.0003088601732409435
+./test_data/Abnormalytime_forecast_PV_table/1540413000000.npy
+[[-1, -1, 5, 16, -1]]
+0.14649941340814332
